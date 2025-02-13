@@ -1,19 +1,22 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Starter pipeline - Customized for a self-hosted agent
 
 trigger:
-- main
+- main  # Triggers the pipeline when changes are pushed to the 'main' branch
 
 pool:
-  vmImage: ubuntu-latest
+  name: SelfHostedPool  # Replace with your self-hosted agent pool name
 
 steps:
-- script: echo Hello, world!
+# Checkout the repository
+- checkout: self
+
+# Run a simple script
+- script: echo "Hello, self-hosted agent!"
   displayName: 'Run a one-line script'
 
+# Multi-line script for additional tasks
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
+    echo "This pipeline is now running on a self-hosted agent."
+    echo "Add other tasks to build, test, and deploy your project."
+    echo "See https://aka.ms/yaml for documentation."
   displayName: 'Run a multi-line script'
