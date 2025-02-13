@@ -1,10 +1,10 @@
-# Starter pipeline - Customized for a self-hosted agent
+
 
 trigger:
 - main  # Triggers the pipeline when changes are pushed to the 'main' branch
 
 pool:
-  name: SelfHostedPool  # Replace with your self-hosted agent pool name
+  name: SelfHostedPool  
 
 steps:
 # Checkout the repository
