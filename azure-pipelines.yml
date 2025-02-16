@@ -36,6 +36,7 @@ stages:
           effectivePomSkip: false
           sonarQubeRunAnalysis: true
           codeCoverageToolOption: 'JaCoCo'
+          sqMavenPluginVersionChoice: 'pom'
 
 
 
