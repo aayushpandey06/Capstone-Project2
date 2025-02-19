@@ -1,0 +1,22 @@
+name: Codacy Analysis
+
+on:
+  push:
+    branches:
+      - main  # This will run Codacy analysis when you push to the main branch. You can change 'main' to any branch you are using.
+  pull_request:
+    branches:
+      - main  # Runs analysis on pull requests targeting the 'main' branch.
+
+jobs:
+  codacy-analysis:
+    runs-on: ubuntu-latest  # You can also use 'windows-latest' or 'macos-latest' if needed
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # This step checks out your code so Codacy can analyze it.
+
+      - name: Set up Codacy
+        uses: codacy/codacy-analysis-cli-action@v1  # This action runs Codacy's analysis.
+        with:
+          token: ${{ secrets.yo5swd8ekab7hcucG49P }}  # Uses your Codacy API token (more on this below)
