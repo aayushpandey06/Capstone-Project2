@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Codacy
-        uses: codacy/codacy-analysis-cli-action@v2  # Update to the latest stable version
+        uses: codacy/codacy-analysis-cli-action@master
+  # Update to the latest stable version
         with:
           token: ${{ secrets.yo5swd8ekab7hcucG49P }}  # Uses the token from GitHub Secrets
