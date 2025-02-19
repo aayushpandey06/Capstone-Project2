@@ -3,20 +3,20 @@ name: Codacy Analysis
 on:
   push:
     branches:
-      - main  # This will run Codacy analysis when you push to the main branch. You can change 'main' to any branch you are using.
+      - main  # Adjust to your branch if needed
   pull_request:
     branches:
-      - main  # Runs analysis on pull requests targeting the 'main' branch.
+      - main
 
 jobs:
   codacy-analysis:
-    runs-on: ubuntu-latest  # You can also use 'windows-latest' or 'macos-latest' if needed
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  # This step checks out your code so Codacy can analyze it.
+        uses: actions/checkout@v2
 
       - name: Set up Codacy
-        uses: codacy/codacy-analysis-cli-action@v1  # This action runs Codacy's analysis.
+        uses: codacy/codacy-analysis-cli-action@v2  # Update to the latest stable version
         with:
-          token: ${{ secrets.yo5swd8ekab7hcucG49P }}  # Uses your Codacy API token (more on this below)
+          token: ${{ secrets.yo5swd8ekab7hcucG49P }}  # Uses the token from GitHub Secrets
