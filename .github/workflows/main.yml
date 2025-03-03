@@ -22,6 +22,7 @@ jobs:
     permissions:
       contents: read
       security-events: write # ✅ Added required permission for CodeQL to upload results
+      actions: read
 
     steps:
       - name: Checkout Repository
