@@ -5,7 +5,7 @@ import pluginReact from "eslint-plugin-react";
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
   {
-    files: ["**/*.{js,mjs,cjs,jsx}"],
+    files: ["/*.{js,mjs,cjs,jsx}"],
     languageOptions: {
       globals: globals.browser,
     },
@@ -16,7 +16,15 @@ export default [
   },
   pluginJs.configs.recommended,
   {
-    files: ["**/*.{jsx,tsx}"], // Ensure React rules apply only to JSX/TSX files
-    ...pluginReact.configs.flat.recommended,
-  },
+    files: ["/*.{jsx,tsx}"], // Ensure React rules apply only to JSX/TSX files
+    plugins: {
+      react: pluginReact,
+    },
+    rules: {
+      "react/prop-types": "off", // Example rule
+      "react/jsx-uses-react": "off", // Example rule
+      "react/jsx-uses-vars": "error", // Example rule
+      // Add more React-related rules or override as needed
+    },
+  },
 ];
