@@ -1,0 +1,107 @@
+name: Security and Quality Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  security-events: write # ✅ Added required permission for CodeQL to upload results
+  actions: read
+  id-token: write
+
+jobs:
+  security-quality-checks:
+    name: Security & Quality Analysis
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write # ✅ Added required permission for CodeQL to upload results
+      actions: read
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npx eslint .
+
+      # Prettier for code formatting check
+      - name: Run Prettier
+        run: npx prettier --check .
+        continue-on-error: true
+
+      # Dependency Security Check with npm audit
+      - name: Check for Vulnerabilities (npm audit)
+        run: npm audit --audit-level=high || echo "Security vulnerabilities detected"
+
+      # Snyk for security vulnerabilities
+      - name: Run Snyk Security Scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        continue-on-error: true
+
+      # CodeQL analysis for security issues
+      - name: Set up CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript, python # Specify the languages you want to analyze
+
+      - name: Run CodeQL analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          output: ../results
+          upload: always
+          cleanup-level: brutal
+          add-snippets: false
+          skip-queries: false
+          checkout_path: /home/runner/work/Capstone-Project/Capstone-Project
+          upload-database: true
+          wait-for-processing: true
+        env:
+          CODEQL_ACTION_FEATURE_SARIF_COMBINE: true
+          CODEQL_ACTION_FEATURE_WILL_UPLOAD: true
+          CODEQL_ACTION_VERSION: 3.28.10
+
+      # Detect exposed API keys and secrets using TruffleHog
+      - name: Scan for Exposed Secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: .
+          base: HEAD
+          extra_args: "--json"
+
+      # Log detected issues
+      - name: Upload Security Logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-logs
+          path: |
+            npm-audit.log
+            snyk.log
+          if-no-files-found: warn
+
+      # Create GitHub Issue if Security Issues Found
+      - name: Create GitHub Issue if Security Issues Found
+        if: failure()
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "Security Issues Detected in Latest CI Run"
+          content-filepath: npm-audit.log
+          labels: |
+            bug
+            security
