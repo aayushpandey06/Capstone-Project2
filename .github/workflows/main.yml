@@ -82,4 +82,7 @@ jobs:
         with:
           title: "Security Issues Detected in Latest CI Run"
           content-filepath: npm-audit.log
-          labels: bug, security
+          labels: |
+            bug
+            security
+
