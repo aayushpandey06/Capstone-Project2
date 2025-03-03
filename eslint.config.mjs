@@ -1,30 +1,38 @@
-import globals from "globals";
 import pluginJs from "@eslint/js";
 import pluginReact from "eslint-plugin-react";
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
+  pluginJs.configs.recommended, // ESLint recommended rules
+
   {
-    files: ["/*.{js,mjs,cjs,jsx}"],
+    files: ["**/*.{js,mjs,cjs,jsx,tsx}"], // Ensure all relevant files are included
     languageOptions: {
-      globals: globals.browser,
+      ecmaVersion: "latest", // Use the latest ECMAScript version
+      sourceType: "module", // Enable ES Modules
+      globals: {
+        window: "readonly",
+        document: "readonly",
+        alert: "readonly",
+        FormData: "readonly",
+        fetch: "readonly",
+        console: "readonly",
+      },
     },
     rules: {
-      "no-console":
-        import.meta.env?.NODE_ENV === "production" ? "error" : "off",
+      "no-console": import.meta.env?.NODE_ENV === "production" ? "error" : "off",
     },
   },
-  pluginJs.configs.recommended,
+
   {
-    files: ["/*.{jsx,tsx}"], // Ensure React rules apply only to JSX/TSX files
+    files: ["**/*.{jsx,tsx}"], // Apply only to React files
     plugins: {
       react: pluginReact,
     },
     rules: {
-      "react/prop-types": "off", // Example rule
-      "react/jsx-uses-react": "off", // Example rule
-      "react/jsx-uses-vars": "error", // Example rule
-      // Add more React-related rules or override as needed
-    },
-  },
+      "react/prop-types": "off",
+      "react/jsx-uses-react": "off",
+      "react/jsx-uses-vars": "error",
+    },
+  },
 ];
