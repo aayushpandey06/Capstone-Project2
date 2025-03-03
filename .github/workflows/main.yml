@@ -75,7 +75,6 @@ jobs:
             snyk.log
           if-no-files-found: warn
 
-    
       - name: Create GitHub Issue if Security Issues Found
         if: failure()
         uses: peter-evans/create-issue-from-file@v5
@@ -85,4 +84,3 @@ jobs:
           labels: |
             bug
             security
-

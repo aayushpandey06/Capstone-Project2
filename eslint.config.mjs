@@ -20,7 +20,8 @@ export default [
       },
     },
     rules: {
-      "no-console": import.meta.env?.NODE_ENV === "production" ? "error" : "off",
+      "no-console":
+        import.meta.env?.NODE_ENV === "production" ? "error" : "off",
     },
   },
 
