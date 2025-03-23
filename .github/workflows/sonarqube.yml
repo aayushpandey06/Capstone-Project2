@@ -24,8 +24,10 @@ jobs:
 
       - name: Install SonarQube Scanner
         run: |
-          wget https://github.com/SonarSource/sonar-scanner-cli/releases/download/4.7.0.2747/sonar-scanner-cli-4.7.0.2747-linux.zip
-          unzip sonar-scanner-cli-4.7.0.2747-linux.zip
+          # Get the latest release of SonarScanner from the official GitHub releases page
+          VERSION="4.7.0.2747"  # Specify the desired version
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${VERSION}-linux.zip
+          unzip sonar-scanner-cli-${VERSION}-linux.zip
           sudo mv sonar-scanner-4.7.0.2747-linux /opt/sonar-scanner
           sudo ln -s /opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/sonar-scanner
 
@@ -36,3 +38,4 @@ jobs:
 
       - name: Run SonarQube Analysis
         run: sonar-scanner
+
