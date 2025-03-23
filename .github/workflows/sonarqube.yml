@@ -3,10 +3,10 @@ name: SonarQube Code Analysis
 on:
   push:
     branches:
-      - main  # Change this to your branch name if it's different
+      - main
   pull_request:
     branches:
-      - main  # Change this to your branch name if it's different
+      - main
 
 jobs:
   sonar:
@@ -20,22 +20,26 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'  # Change this if you're using another Java version
+          java-version: '17'
 
       - name: Install SonarQube Scanner
         run: |
-          # Get the latest release of SonarScanner from the official GitHub releases page
-          VERSION="4.7.0.2747"  # Specify the desired version
+          VERSION="4.7.0.2747"
           wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${VERSION}-linux.zip
           unzip sonar-scanner-cli-${VERSION}-linux.zip
-          sudo mv sonar-scanner-4.7.0.2747-linux /opt/sonar-scanner
+          sudo mv sonar-scanner-${VERSION}-linux /opt/sonar-scanner
           sudo ln -s /opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/sonar-scanner
 
       - name: Set up SonarCloud Scanner
-        uses: sonarsource/sonarcloud-github-action@v2
+        uses: sonarsource/sonarcloud-github-action@v1
         with:
           sonar-token: ${{ secrets.SONAR_TOKEN }}
 
       - name: Run SonarQube Analysis
         run: sonar-scanner
+
+      - name: Enable Debugging
+        run: |
+          echo "GITHUB_ACTIONS_DEBUG=true" >> $GITHUB_ENV
+
 
