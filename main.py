@@ -1,3 +1,4 @@
+from fastapi import FastAPI, UploadFile, File
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
@@ -9,7 +10,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return RedirectResponse(url="/static/test.html")
+    return RedirectResponse(url="/static/index.html")
 
 static_dir = os.path.abspath("static")
 app.mount("/static", StaticFiles(directory=static_dir, html=True), name="static")
