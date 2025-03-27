@@ -30,16 +30,14 @@ jobs:
           sudo mv sonar-scanner-${VERSION}-linux /opt/sonar-scanner
           sudo ln -s /opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/sonar-scanner
 
-      - name: Set up SonarCloud Scanner
-        uses: sonarsource/sonarcloud-github-action@v1
-        with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
+      # Skipping "Set up SonarCloud Scanner" step since it's not required
 
       - name: Run SonarQube Analysis
         run: sonar-scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: "https://sonarcloud.io"  # Change if using self-hosted SonarQube
 
       - name: Enable Debugging
         run: |
           echo "GITHUB_ACTIONS_DEBUG=true" >> $GITHUB_ENV
-
-
