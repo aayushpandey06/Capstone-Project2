@@ -36,8 +36,8 @@ jobs:
       - name: Run SonarQube Analysis
         run: |
           sonar-scanner \
-            -Dsonar.organization=https://sonarcloud.io/organizations/aayushpandey06/projects \
-            -Dsonar.projectKey=aayushpandey06_Capstone-Project2 \
+            -Dsonar.organization=<https://sonarcloud.io/organizations/aayushpandey06/projects> \
+            -Dsonar.projectKey=<aayushpandey06_Capstone-Project2> \
             -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.host.url="https://sonarcloud.io"
 
