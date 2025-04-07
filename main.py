@@ -8,7 +8,9 @@ import subprocess
 from dotenv import load_dotenv
 app = FastAPI()
 
-
+@app.get("/")
+async def root():
+    return RedirectResponse(url="/static/index.html")
 
 static_dir = os.path.abspath("static")
 app.mount("/static", StaticFiles(directory=static_dir, html=True), name="static")
