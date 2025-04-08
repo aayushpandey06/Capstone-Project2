@@ -16,14 +16,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: SonarCloud Scan
+      - name: Set up SonarScanner
         uses: SonarSource/sonarqube-scan-action@v5.0.0
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
           args: >
             -Dsonar.organization=aayushpandey06
             -Dsonar.projectKey=Capstone-Project2
             -Dsonar.python.coverage.reportPaths=coverage.xml
-
-
