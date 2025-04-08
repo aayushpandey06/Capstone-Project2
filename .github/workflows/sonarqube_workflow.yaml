@@ -1,6 +1,12 @@
 name: "sonar_cloud_scan_github_actions"
 
 on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -21,3 +27,4 @@ jobs:
             -Dsonar.organization=aayushpandey06
             -Dsonar.projectKey=Capstone-Project2
             -Dsonar.python.coverage.reportPaths=coverage.xml
+
