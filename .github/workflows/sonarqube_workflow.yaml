@@ -26,5 +26,6 @@ jobs:
           args: >
             -Dsonar.organization=aayushpandey06
             -Dsonar.projectKey=Capstone-Project2
+            -Dsonar.branch.name=main
             -Dsonar.python.coverage.reportPaths=coverage.xml
 
